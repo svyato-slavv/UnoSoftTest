@@ -96,18 +96,13 @@ public class Main {
 
     private static void writeListToFile(List<List<String>> groups) {
         long countOfGroups = groups.stream().filter(x -> x.size() > 1).count();
-        groups.sort(new Comparator<List<String>>() {
-            @Override
-            public int compare(List<String> o1, List<String> o2) {
-                return o2.size() - o1.size();
-            }
-        });
+        groups.sort((o1, o2) -> o2.size() - o1.size());
         File file = new File("output.txt");
         int groupNumber = 0;
         try (FileWriter writer = new FileWriter(file, false)) {
             writer.write("Число групп с более чем одним элементом: " + countOfGroups + "\n");
             for (List<String> group : groups) {
-                Set<String> groupSet = new HashSet<String>(group);
+                Set<String> groupSet = new HashSet<>(group);
                 groupNumber++;
                 writer.write("Группа " + groupNumber + "\n");
                 for (String line : groupSet) {
