@@ -33,7 +33,9 @@ public class Main {
         for (String line : lines) {
             String[] words = line.split(";");
             for (int i = 0; i < words.length; i++) {
-                words[i] = words[i].substring(1, words[i].length() - 1);
+                if (words[i].startsWith("\"") && words[i].endsWith("\"")) {
+                    words[i] = words[i].substring(1, words[i].length() - 1);
+                }
             }
             if (Arrays.stream(words).anyMatch(str -> str.contains("\"")))
                 continue;
