@@ -1,5 +1,8 @@
 package org.example;
 
+
+import org.apache.commons.lang3.math.NumberUtils;
+
 import java.io.*;
 import java.util.*;
 
@@ -37,7 +40,7 @@ public class Main {
                     words[i] = words[i].substring(1, words[i].length() - 1);
                 }
             }
-            if (Arrays.stream(words).anyMatch(str -> str.contains("\"")))
+            if (!Arrays.stream(words).allMatch(str -> NumberUtils.isParsable(str) || str.isEmpty()))
                 continue;
 
             TreeSet<Integer> foundInGroups = new TreeSet<>();
