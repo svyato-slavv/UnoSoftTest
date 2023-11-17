@@ -29,6 +29,7 @@ public class Main {
         }
     }
 
+
     private static List<List<String>> findGroups(List<String> lines) {
         List<Map<String, Integer>> wordsToGroupsNumbers = new ArrayList<>();
         List<List<String>> linesGroups = new ArrayList<>();
@@ -100,17 +101,17 @@ public class Main {
     }
 
     private static void writeListToFile(List<List<String>> groups) {
-        long countOfGroups = groups.stream().filter(x -> x.size() > 1).count();
-        groups.sort((o1, o2) -> o2.size() - o1.size());
+        List<Set<String>> listWithUniqueLinesInGroup = new ArrayList<>(groups.stream().map(HashSet::new).toList());
+        long countOfGroups = listWithUniqueLinesInGroup.stream().filter(x -> x.size() > 1).count();
+        listWithUniqueLinesInGroup.sort((o1, o2) -> o2.size() - o1.size());
         File file = new File("output.txt");
         int groupNumber = 0;
         try (FileWriter writer = new FileWriter(file, false)) {
             writer.write("Число групп с более чем одним элементом: " + countOfGroups + "\n");
-            for (List<String> group : groups) {
-                Set<String> groupSet = new HashSet<>(group);
+            for (Set<String> group : listWithUniqueLinesInGroup) {
                 groupNumber++;
                 writer.write("Группа " + groupNumber + "\n");
-                for (String line : groupSet) {
+                for (String line : group) {
                     writer.write(line + "\n");
                 }
             }
@@ -118,7 +119,6 @@ public class Main {
             System.out.println(ex.getMessage());
         }
     }
-
 }
 
 
