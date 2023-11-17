@@ -101,8 +101,13 @@ public class Main {
     }
 
     private static void writeListToFile(List<List<String>> groups) {
-        List<Set<String>> listWithUniqueLinesInGroup = new ArrayList<>(groups.stream().map(HashSet::new).toList());
-        long countOfGroups = listWithUniqueLinesInGroup.stream().filter(x -> x.size() > 1).count();
+        List<Set<String>> listWithUniqueLinesInGroup =
+                new ArrayList<>(groups.stream()
+                        .map(HashSet::new)
+                        .toList());
+        long countOfGroups = listWithUniqueLinesInGroup.stream()
+                .filter(x -> x.size() > 1)
+                .count();
         listWithUniqueLinesInGroup.sort((o1, o2) -> o2.size() - o1.size());
         File file = new File("output.txt");
         int groupNumber = 0;
